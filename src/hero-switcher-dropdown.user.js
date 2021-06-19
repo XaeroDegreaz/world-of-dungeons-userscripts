@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Hero Switcher Dropdown
+// @name         [WoD] Hero Switcher Dropdown
 // @namespace    com.dobydigital.userscripts.wod
-// @version      2021.06.19.1
+// @version      2021.06.19.2
 // @description  Adds a hero selection dropdown at the top of all pages. Not all skins are supported.
 // @author       XaeroDegreaz
 // @supportUrl   https://github.com/XaeroDegreaz/world-of-dungeons-userscripts/issues
