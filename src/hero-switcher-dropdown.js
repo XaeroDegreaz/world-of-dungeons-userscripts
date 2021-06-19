@@ -5,7 +5,7 @@
 // @description  Adds a hero selection dropdown at the top of all pages. Not all skins are supported.
 // @author       XaeroDegreaz
 // @supportUrl   https://github.com/XaeroDegreaz/world-of-dungeons-userscripts/issues
-// @source
+// @source       https://raw.githubusercontent.com/XaeroDegreaz/world-of-dungeons-userscripts/main/src/hero-switcher-dropdown.js
 // @match        http*://*.world-of-dungeons.net/wod/spiel*
 // @icon         http://info.world-of-dungeons.net/wod/css/WOD.gif
 // @grant        GM_xmlhttpRequest
