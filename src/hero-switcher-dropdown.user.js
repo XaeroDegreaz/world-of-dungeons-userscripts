@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         [WoD] Hero Switcher Dropdown
 // @namespace    com.dobydigital.userscripts.wod
-// @version      2021.06.20.1
+// @version      2021.06.20.2
 // @description  Adds a hero selection dropdown at the top of all World of Dungeons pages. Not all skins are supported.
 // @author       XaeroDegreaz
 // @home         https://github.com/XaeroDegreaz/world-of-dungeons-userscripts
@@ -128,6 +128,16 @@
     targetElement.prepend( newDiv );
   }
 
+  function getHiddenInputValuesForSubPages()
+  {
+    return {
+      //# items.php - cellar, treasure vault, etc
+      view: $( 'input[type=hidden][name=view]' ).val(),
+      //# trade.php - market, auctions, etc
+      show: $( 'input[type=hidden][name=show]' ).val()
+    };
+  }
+
   function getUrlVars()
   {
     const vars = [];
@@ -138,6 +148,18 @@
       vars.push( hash[0] );
       vars[hash[0]] = hash[1];
     }
+    //# After performing a search on any of the items pages (cellar, treasure vault), the 'view' query parameter goes missing, so switching to another character
+    //# will redirect to the general storage. We want to be able to capture that view value from the form inputs, and set the 'view' query param
+    //# if it isn't already present.
+    //# We see the same behaviour on the market / auction pages, only the query param is 'show' instead of view.
+    const subPages = getHiddenInputValuesForSubPages();
+    Object.keys( subPages ).map( key => {
+      if ( subPages[key] && !vars[key] )
+      {
+        vars.push( key );
+        vars[key] = subPages[key];
+      }
+    } )
     return vars;
   }
 })();
