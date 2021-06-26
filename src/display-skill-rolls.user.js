@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         [WoD] Display Skill Rolls
 // @namespace    com.dobydigital.userscripts.wod
-// @version      2021.06.27.0
+// @version      2021.06.27.1
 // @description  Calculates skill rolls, and adds a new table column on the skills page.
 // @author       XaeroDegreaz
 // @home         https://github.com/XaeroDegreaz/world-of-dungeons-userscripts
@@ -166,7 +166,7 @@
       .each( async function () {
         const row = $( this );
         $( row )
-          .find( 'input[name^=nonjs_improve], input[name^=undo]' )
+          .find( 'input[type=image]' )
           .click( async function () {
             await renderRollData( $( row ), skillRollData, shortAttributes );
           } );
