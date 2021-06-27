@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         [WoD] Display Skill Rolls
 // @namespace    com.dobydigital.userscripts.wod
-// @version      2021.06.27.1
+// @version      2021.06.27.2
 // @description  Calculates skill rolls, and adds a new table column on the skills page.
 // @author       XaeroDegreaz
 // @home         https://github.com/XaeroDegreaz/world-of-dungeons-userscripts
@@ -84,34 +84,48 @@
     } );
     return retVal;
   }
+
   const parseAttackRolls = ( data ) => {
     const jq = $( data );
     const markers = jq.find( 'li' ).map( function () {
-      const match = /^The (?<rollType>.+)roll is: (?<rollCalculation>.+)$/g.exec( $( this ).text() );
+      const match = /^The (?<rollType>.+)roll is: (?<rollCalculation>.+?)( \((?<modifier>[+\-]\d*%?)\))?$/g.exec( $( this ).text() );
       if ( !match )
       {
         return;
       }
       //console.log( {match} );
       // @ts-ignore
-      const {rollType, rollCalculation} = match.groups;
-      //console.log( {rollType, rollCalculation} );
-      return {rollType, rollCalculation};
+      const {rollType, rollCalculation, modifier} = match.groups;
+      //console.log( {rollType, rollCalculation, modifier} );
+      return {rollType, rollCalculation, modifier};
     } ).toArray();
     //console.log( {markers} );
     return markers;
   }
 
-  function calculateSkillRoll( heroAttributes, skillName, skillLevel, rollCalculation )
+  function calculateSkillRoll( heroAttributes, skillName, skillLevel, rollCalculation, modifier )
   {
-    //console.log( {heroAttributes, skillName, skillLevel, rollCalculation} );
-    let replaced = rollCalculation.replaceAll( /\([+\-]\d+%?\)/g, '' ).replaceAll( skillName, skillLevel ).trim();
+    //console.log( {heroAttributes, skillName, skillLevel, rollCalculation, modifier} );
+    let replaced = rollCalculation.replaceAll( skillName, skillLevel ).trim();
     Object.keys( heroAttributes ).forEach( key => {
       replaced = replaced.replaceAll( key, heroAttributes[key] );
     } )
     replaced = replaced.replaceAll( 'x', '*' );
     //console.log( {replaced} );
-    return Math.floor( eval( replaced ) );
+    const roll = eval( replaced );
+    const modifierAsNumber = Number( modifier?.replaceAll( /\D/g, '' ) );
+    const modifierAsFraction = modifierAsNumber / 100;
+    const rollWithModifier = modifier
+                             ? modifier.endsWith( '%' )
+                               ? modifier.startsWith( '+' )
+                                 ? roll * (1 + modifierAsFraction)
+                                 : roll * (1 - modifierAsFraction)
+                               : modifier.startsWith( '+' )
+                                 ? roll + modifierAsNumber
+                                 : roll - modifierAsNumber
+                             : roll
+    //console.log( {rollWithModifier} );
+    return Math.floor( rollWithModifier );
   }
 
   const storage = window.localStorage;
@@ -210,8 +224,9 @@
     const formatted = skillRollData[skill].map( x => {
       return {
         rollType: x.rollType,
-        rollValue: calculateSkillRoll( shortAttributes, skill, skillLevel, x.rollCalculation ),
-        rollCalculation: x.rollCalculation
+        rollValue: calculateSkillRoll( shortAttributes, skill, skillLevel, x.rollCalculation, x.modifier ),
+        rollCalculation: x.rollCalculation,
+        modifier: x.modifier
       };
     } );
     //console.log( {formatted} );
@@ -220,7 +235,8 @@
       .replaceWith( `<td class="roll_placeholder"><table width="100%"><tbody>${
         formatted
           .map( x => {
-            return `<tr onmouseover="return wodToolTip(this, '<b>${x.rollType}</b>: ${x.rollCalculation}');">
+            const modifierString = x.modifier ? `<b>(${x.modifier})</b>` : '';
+            return `<tr onmouseover="return wodToolTip(this, '<b>${x.rollType}</b>: ${x.rollCalculation} ${modifierString}');">
                             <td align="left">
                                 ${x.rollType}
                             </td>
