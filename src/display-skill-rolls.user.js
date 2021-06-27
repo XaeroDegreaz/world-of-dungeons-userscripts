@@ -1,15 +1,16 @@
 // ==UserScript==
 // @name         [WoD] Display Skill Rolls
 // @namespace    com.dobydigital.userscripts.wod
-// @version      2021.06.27.2
+// @version      2021.06.27.8
 // @description  Calculates skill rolls, and adds a new table column on the skills page.
 // @author       XaeroDegreaz
 // @home         https://github.com/XaeroDegreaz/world-of-dungeons-userscripts
 // @supportUrl   https://github.com/XaeroDegreaz/world-of-dungeons-userscripts/issues
 // @source       https://raw.githubusercontent.com/XaeroDegreaz/world-of-dungeons-userscripts/main/src/display-skill-rolls.user.js
-// @match        http*://*.world-of-dungeons.net/wod/spiel/hero/skills*
+// @match        *://*.world-of-dungeons.net/wod/spiel/hero/skills*
 // @icon         http://info.world-of-dungeons.net/wod/css/WOD.gif
-// @grant        GM_xmlhttpRequest
+// @require      https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js
+// @grant        GM.xmlHttpRequest
 // ==/UserScript==
 
 (async function () {
@@ -36,7 +37,7 @@
 
   const loadHeroAttributes = async () => {
     return await new Promise( resolve => {
-      GM_xmlhttpRequest( {
+      GM.xmlHttpRequest( {
         url: '/wod/spiel/hero/attributes.php',
         synchronous: false,
         onload: ( data ) => {
@@ -205,7 +206,7 @@
     if ( !skillRollData?.[skill] )
     {
       const skillData = await new Promise( resolve => {
-        GM_xmlhttpRequest( {
+        GM.xmlHttpRequest( {
           url: link,
           synchronous: false,
           onload: ( data ) => {
