@@ -5,6 +5,7 @@ export class HeroService {
   {
     const obj: any = {}
     Object.keys( heroAttributes ).forEach( ( key: string ) => {
+      // @ts-ignore
       obj[AttributeShortNames[key]] = heroAttributes[key]
     } )
     return obj
@@ -45,6 +46,7 @@ export class HeroService {
       .toArray()
     const heroAttributes = {} as HeroAttributes
     rawRows.forEach( x => {
+      // @ts-ignore
       heroAttributes[x.attributeName] = x.effectiveValueCell.length > 0 ? Number( x.effectiveValueCell ) : Number( x.valueCell )
     } )
     return heroAttributes

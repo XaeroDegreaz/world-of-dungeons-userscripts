@@ -1,6 +1,6 @@
 export type HeroAttributesShortName = { [shortAttributeName: string]: number }
 
-export interface HeroAttributes {
+export type HeroAttributes = {
   Strength: number;
   Constitution: number;
   Intelligence: number;
@@ -9,6 +9,17 @@ export interface HeroAttributes {
   Agility: number;
   Perception: number;
   Willpower: number;
+}
+
+export enum HeroAttributeNames  {
+  Strength,
+  Constitution,
+  Intelligence,
+  Dexterity,
+  Charisma,
+  Agility,
+  Perception,
+  Willpower
 }
 
 export enum AttributeShortNames {

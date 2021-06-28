@@ -33,7 +33,7 @@ const main = async () => {
       const row = $( this );
       $( row )
         .find( 'input[type=image]' )
-        .click( async function () {
+        .on( 'click', async function () {
           await renderRollData( $( row ), skillRollData, shortAttributes )
         } )
       await renderRollData( $( row ), skillRollData, shortAttributes )
