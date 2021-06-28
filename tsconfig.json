@@ -9,5 +9,9 @@
     "lib": ["ESNext"],
     "target": "es6",
     "allowJs": true
-  }
+  },
+  "include": [
+    "src/**/*.ts",
+    "test/**/*.ts"
+  ]
 }

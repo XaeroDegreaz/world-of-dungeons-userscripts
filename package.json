@@ -1,4 +1,5 @@
 {
+  "type": "commonjs",
   "name": "world-of-dungeons-userscripts",
   "description": "Collection of userscripts for World of Dungeons",
   "version": "1.0.0",
@@ -33,8 +34,7 @@
   "private": true,
   "dependencies": {
     "axios": "0.21.1",
-    "axios-userscript-adapter": "0.1.4",
-    "jquery": "3.6.0"
+    "axios-userscript-adapter": "0.1.4"
   },
   "devDependencies": {
     "@babel/core": "7.14.6",
@@ -52,10 +52,15 @@
     "eslint-plugin-node": "11.1.0",
     "eslint-plugin-promise": "5.1.0",
     "eslint-plugin-standard": "4.1.0",
+    "expect": "^27.0.2",
+    "jquery": "^3.6.0",
+    "jsdom": "^16.6.0",
     "less": "4.1.1",
     "less-loader": "10.0.0",
+    "mocha": "^9.0.1",
     "style-loader": "2.0.0",
     "ts-loader": "9.2.3",
+    "ts-node": "^10.0.0",
     "typescript": "4.3.4",
     "userscript-metadata-webpack-plugin": "0.1.0",
     "webpack": "5.39.1",
