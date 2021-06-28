@@ -1,4 +1,4 @@
-export type HeroAttributesShortName = { [shortAttributeName: string]: number }
+export type HeroAttributesShortName = { [shortAttributeName: string]: number };
 
 export type HeroAttributes = {
   Strength: number;
@@ -9,9 +9,9 @@ export type HeroAttributes = {
   Agility: number;
   Perception: number;
   Willpower: number;
-}
+};
 
-export enum HeroAttributeNames  {
+export enum HeroAttributeNames {
   Strength,
   Constitution,
   Intelligence,
@@ -19,7 +19,7 @@ export enum HeroAttributeNames  {
   Charisma,
   Agility,
   Perception,
-  Willpower
+  Willpower,
 }
 
 export enum AttributeShortNames {
@@ -30,5 +30,5 @@ export enum AttributeShortNames {
   Charisma = 'ch',
   Agility = 'ag',
   Perception = 'pe',
-  Willpower = 'wi'
+  Willpower = 'wi',
 }

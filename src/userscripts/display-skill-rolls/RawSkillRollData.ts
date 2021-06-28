@@ -1,3 +1,3 @@
-import {SkillRoll} from "./SkillRoll";
+import { SkillRoll } from './SkillRoll';
 
-export type RawSkillRollData = { [skillName: string]: SkillRoll[] }
+export type RawSkillRollData = { [skillName: string]: SkillRoll[] };

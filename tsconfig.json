@@ -4,9 +4,13 @@
     "esModuleInterop": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "moduleResolution": "Node",
     "module": "CommonJS",
-    "lib": ["ESNext"],
+    "lib": [
+      "ESNext"
+    ],
     "target": "es6",
     "allowJs": true
   },
