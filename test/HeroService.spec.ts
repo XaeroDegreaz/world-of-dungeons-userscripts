@@ -2,26 +2,17 @@ import expect from 'expect'
 import * as fs from 'fs'
 import * as JSDOM from 'jsdom'
 import {describe, it} from 'mocha'
-import {HeroService} from './HeroService'
+import {HeroAttributes} from "../src/userscripts/display-skill-rolls/HeroAttributes";
+import {HeroService} from "../src/userscripts/display-skill-rolls/HeroService";
+import {SkillService} from "../src/userscripts/display-skill-rolls/SkillService";
 
 const $ = require( 'jquery' )( new JSDOM.JSDOM().window )
 
-interface HeroAttributes {
-  Strength: number;
-  Constitution: number;
-  Intelligence: number;
-  Dexterity: number;
-  Charisma: number;
-  Agility: number;
-  Perception: number;
-  Willpower: number;
-}
-
 describe( 'does stuff', () => {
   it( 'does something', async () => {
-    const hs = new HeroService( $ )
+    const hs = new HeroService()
     const r = fs.readFileSync( __dirname + '/resources/attributes.html' )
-    const parsed: HeroAttributes = hs.parsHeroAttributes( r.toString() )
+    const parsed: HeroAttributes = hs.parseHeroAttributes( r.toString() )
     expect( parsed ).toEqual( {
       Strength: 4,
       Constitution: 3,
@@ -32,7 +23,7 @@ describe( 'does stuff', () => {
       Perception: 2,
       Willpower: 6
     } )
-    expect( HeroService.attributesToShortName( parsed ) ).toEqual( {
+    expect( hs.attributesToShortName( parsed ) ).toEqual( {
       st: 4,
       co: 3,
       in: 6,
@@ -52,9 +43,9 @@ interface AttackRoll {
 
 describe( 'parse skill rolls', () => {
   it( 'parses knife combat correctly', () => {
-    const hs = new HeroService( $ )
+    const hs = new SkillService()
     const r = fs.readFileSync( __dirname + '/resources/knife-combat.html' )
-    const parsed: AttackRoll[] = hs.parseAttackRolls( r.toString() )
+    const parsed: AttackRoll[] = hs.parseSkillRolls( r.toString() )
     expect( parsed ).toEqual( [
       {
         rollType: 'attack',
@@ -75,9 +66,9 @@ describe( 'parse skill rolls', () => {
   } )
 
   it( 'parses blunderbuss combat correctly', () => {
-    const hs = new HeroService( $ )
+    const hs = new SkillService()
     const r = fs.readFileSync( __dirname + '/resources/blunderbuss.html' )
-    const parsed: AttackRoll[] = hs.parseAttackRolls( r.toString() )
+    const parsed: AttackRoll[] = hs.parseSkillRolls( r.toString() )
     expect( parsed ).toEqual( [
       {
         rollType: 'attack',
@@ -94,7 +85,7 @@ describe( 'parse skill rolls', () => {
 } )
 
 describe( 'calculate skill rolls', () => {
-  const hs = new HeroService( $ )
+  const hs = new SkillService()
   const heroAttributes = {
     st: 4,
     co: 3,
