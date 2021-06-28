@@ -2,7 +2,7 @@ const {
   author,
   dependencies,
   repository
-} = require( '../../package.json' )
+} = require( '../../../package.json' )
 
 module.exports = {
   name: 'script2',

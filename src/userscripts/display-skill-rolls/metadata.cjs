@@ -3,7 +3,7 @@ const {
   dependencies,
   repository,
   userScripts
-} = require( '../../package.json' )
+} = require( '../../../package.json' )
 
 module.exports = {
   name: '[WoD] Display Skill Rolls',

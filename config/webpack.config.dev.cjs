@@ -7,13 +7,13 @@ const userScriptDirs = require('./userScriptDirs.cjs')
 const webpackConfig = require('./webpack.config.base.cjs')
 
 const cfg = userScriptDirs.map(script => {
-  const metadata = require(`../src/${script}/metadata.cjs`)
+  const metadata = require(`../src/userscripts/${script}/metadata.cjs`)
   const prodPath = `../dist/${script}/index.prod.user.js`
   metadata.require.push(`file://${path.resolve(__dirname, prodPath)}`)
   metadata.name += ' - DEV'
   return merge(webpackConfig, {
     entry: {
-      prod: `./src/${script}/index.ts`,
+      prod: `./src/userscripts/${script}/index.ts`,
       dev: path.resolve(__dirname, './empty.cjs'),
     },
     output: {
