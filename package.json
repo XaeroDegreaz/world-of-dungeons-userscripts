@@ -34,7 +34,8 @@
   "private": true,
   "dependencies": {
     "axios": "0.21.1",
-    "axios-userscript-adapter": "0.1.4"
+    "axios-userscript-adapter": "0.1.4",
+    "rpg-dice-roller": "^5.0.0"
   },
   "devDependencies": {
     "@babel/core": "7.14.6",
